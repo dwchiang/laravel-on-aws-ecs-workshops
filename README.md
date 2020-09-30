@@ -13,7 +13,9 @@ These workshops assume that we will have multiple workloads on both production a
 
 Please well prepare the preparations before attending the workshop.
 
-- [ ] Having an AWS Root Account.
+- [ ] Having an AWS Root Account, or an IAM user with `AdministratorAccess` policy.
+  - Check: AWS Access Key Id
+  - Check: AWS Secret Access Key
 - [ ] Having [Docker](https://docs.docker.com/get-docker/) on your local machine.
   - Check: `docker -v`
 - [ ] Having [composer](https://getcomposer.org/) on your local machine.
@@ -44,9 +46,10 @@ Please well prepare the preparations before attending the workshop.
 
 # Section 1: Getting Started
 
-- 1.1: Build a running Laravel on local machine
-- 1.2: Deploy the infra (v1) on AWS
-- 1.3: Deploy a running Laravel on AWS ECS
+- Step 1.1: Build & Running Laravel on local machine
+- Step 1.2: Publish image into Amazon ECR
+- Step 1.3: Deployment & Running on Amazon Fargate (ECS)
+- Step 1.4: Next section or Destroy the deployment
 
 We will do all the **Section 1** works in the folder `./section-1/`:
 
@@ -54,37 +57,41 @@ We will do all the **Section 1** works in the folder `./section-1/`:
 > cd section-1
 ```
 
-## Step 1.1: Build a running Laravel on local machine
+## Step 1.1: Build & Running Laravel on local machine
 
 Let's create a new Laravel project in the folder `./secion-1/src/`:
 
-You can use any version of Laravel you preferred. In this workshop, we will use the latest TLS version.
+- You can use any version of Laravel you preferred. In this workshop, we will use the latest TLS version.
 
 ```
 > composer create-project --prefer-dist laravel/laravel:6.18.35 src
 ```
 
-Here is the project folder structure in `./section-1`:
+Here is the current project folder structure in `./section-1`:
 
 ```
-❯ tree -L 1
+❯ tree --dirsfirst -L 1
 .
+├── cdk
+├── images
+├── src
 ├── Dockerfile
-└── src
-
-1 directory, 1 file
+├── Makefile
+├── build.sh
+└── export-variables.example
 ```
 
-Before building the docker image, let's configure environment variables that will be used in the build. Please duplicate the example file of variables from `export-variables.example` to `export-variables`. 
+Before our building the docker image, let's **configure** environment variables that will be used in the build. 
 
-You need to edit the file `export-variables` to fit your situation. Especially the `AWS_ACCOUNT_ID` value. If you don't know your AWS Account ID, use this AWS CLI command: `aws sts get-caller-identity`.
+- Please duplicate the example file of variables from `export-variables.example` to `export-variables`, then load it by `source` command. 
+- You need to edit the file `export-variables` to fit your situation. Especially the `AWS_ACCOUNT_ID` value. If you don't know your AWS Account ID, use this AWS CLI command: `aws sts get-caller-identity`.
 
 ```
 > cp export-variables.example export-variables
+> source export-variables
 ```
 
-
-Let's build the docker image:
+Now it's time to **build** the docker image:
 
 ```
 > ./build.sh
@@ -112,11 +119,25 @@ or
 
 Now, you are running Laravel on a container on your local machine. Please visit this URL `http://localhost:8080/` (or `http://127.0.0.1:8080/`) in your browser.
 
-In this step, we verify that we are able to build the laravel docker image and make it run on our local machine.
+- In this step, we has verified that we are able to build the laravel docker image and make it run on our local machine.
+- You can stop the running container by using `docker ps` and `docker stop {CONTAINER_ID}`.
 
-You can stop the running container by using `docker ps` and `docker stop {CONTAINER_ID}`.
+Next step, we are going to publish the image you just built into Amazon ECR (Elastic Container Registry) and deploy it to run on AWS Fargate.
 
-## Step 1.2: Deploy the infra (v1) on AWS
+## Step 1.2: Publish image into Amazon ECR
+
+Once you can build and run the laravel container successfully on your local machine, we can publish the image into Amazon ECR (Elastic Container Registry) under your AWS Account. We will pull the image later on and deploy it on AWS Fargate to run.
+
+- If you want to know the details of the commands, feel free to take a look at `publish` section in `Makefile` file.
+
+```
+> source export-variables
+> make publish
+```
+
+You can check at Amazon ECR service in AWS Management Console.
+
+## Step 1.3: Deployment & Running on AWS Fargate (ECS)
 
 In this step, we will plan, define and deploy our very first version of AWS infrastructure that we are going to deploy our laravel container to run on it.
 
@@ -135,7 +156,8 @@ To make this workshop as simple as possible, we will go with all the services wi
 - Region x1
 - AZ x2
 - VPC x1
-- Subnets: public x2
+- Subnets: public x2, private x2, isolated x2
+- NAT Gateways x1
 - ALB x1 (requires 2 subnets in 2 different AZ)
 
 So that we can focus on our application first, and extend each services from one to multiple in the later sections to have high availability and so on.
@@ -165,6 +187,45 @@ CDKToolkit: creating CloudFormation changeset...
  ✅  Environment aws://111111111111/us-west-1 bootstrapped.
 ```
 
-## Step 1.3: Deploy a running Laravel on AWS ECS
+Synth:
 
-TBD
+```
+> cdk synth
+```
+
+Now, it's time to deploy :)
+
+```
+> cdk deploy
+
+# follow the instruction on the CLI, usually need to press `y`.
+
+...
+...
+
+Outputs:
+DevSection1LaravelOnAwsWorkshopStack.DevSection1AlbDnsName = DevSe-DevSe-11AOKXxxxxxxx-1234567890.us-west-1.elb.amazonaws.com
+```
+
+Now you can test in your browser by visiting `http://DevSe-DevSe-11AOKXxxxxxxx-1234567890.us-west-1.elb.amazonaws.com/`. You will see the same Laravel page with your running on local machine.
+
+### Learning Station
+
+You can look around in AWS Management Console to see what resources are created by CDK:
+
+- CloudFormation: Stacks, Events, Resources, Outputs
+- ECS: Clusters, Services, Task Definitions
+- VPC: Subnets, Route Tables, Internet Gateways, Elastic IPs, NAT Gateways, Network ACL, Security Groups
+- EC2: Load Balancers, Listeners, Target Groups
+
+## Step 1.4: Next section or Destroy the deployment
+
+You did a great job! Let's heading to Section 2!
+
+If you want to take a rest for now, please remember to destory the deployment of Section 1 by using:
+
+```
+> cdk destroy
+```
+
+You can double check if all the resources are cleaned up by visiting CloudFormation service in AWS Management Console with the same AWS Region you assigned in AWS CLI.
