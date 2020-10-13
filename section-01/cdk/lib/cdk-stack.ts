@@ -67,7 +67,8 @@ export class LaravelOnAwsWorkshopStack extends cdk.Stack {
 
     const container = fargateTaskDefinition.addContainer('defaultContainer', {
       image: ecs.ContainerImage.fromEcrRepository(ecrRepo), 
-      memoryLimitMiB: 256,
+      memoryLimitMiB: 512,
+      cpu: 256,
     });
 
     container.addPortMappings({
@@ -107,7 +108,10 @@ export class LaravelOnAwsWorkshopStack extends cdk.Stack {
 
     //---------------------------------------------------------------------------
     // ecsService: Application Auto Scaling    
-    const scaling = ecsService.autoScaleTaskCount({ maxCapacity: 10 });
+    const scaling = ecsService.autoScaleTaskCount({ 
+      minCapacity: 2,
+      maxCapacity: 10 
+    });
 
     scaling.scaleOnCpuUtilization('CpuScaling', {
       targetUtilizationPercent: 50
