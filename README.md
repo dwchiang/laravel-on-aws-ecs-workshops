@@ -20,6 +20,8 @@ The first two sections is getting to know there are two launch types in Amazon E
 
 - Section 1: [Getting Started on ECS Fargate Launch Type](section-01)
 - Section 2: [Getting Started on ECS EC2 Launch Type](section-02)
+- Section 3: [Prepare a project repository](section-03)
+
 
 # Architecture Overview
 

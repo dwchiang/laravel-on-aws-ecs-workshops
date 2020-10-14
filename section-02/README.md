@@ -1,4 +1,4 @@
-# Section 2: Getting Started on EC2
+# Section 2: Getting Started on ECS EC2 launch type
 
 # Objective
 
@@ -6,8 +6,8 @@ Comparing to section 1 (running on ECS Fargate launch type), we are going to run
 
 # Highlights
 
-- Same with section 1.
-- Changed from ECS Fargate launch type to ECS EC2 launch type.
+- Almost the same architecture with section 1.
+- Change from ECS Fargate launch type to ECS EC2 launch type.
 
 # Architecture Overview
 
@@ -203,7 +203,7 @@ You can look around in AWS Management Console to see what resources are created 
 
 ## Step 2.4: Next section or Destroy the deployment
 
-You did a great job! Let's heading to Section 3!
+You did a great job! Let's heading to [Section 3](../section-03/)!
 
 If you want to take a rest for now, please remember to destory the deployment of this section by using:
 
