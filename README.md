@@ -16,12 +16,15 @@ These workshops assume that we will have multiple workloads on both production a
 
 You don't need to know or learn about AWS ECS, EC2, Fargate, or even CDK before our diving deeper, you can still enjoy the getting started sections. You only need to have an AWS account or an IAM account. We will guide you to know each parts of this architecture in the later sections.
 
-The first two sections is getting to know there are two launch types in Amazon ECS.
+The first two sections is getting to know there are two launch types in Amazon ECS:
 
 - Section 1: [Getting Started on ECS Fargate Launch Type](section-01)
 - Section 2: [Getting Started on ECS EC2 Launch Type](section-02)
-- Section 3: [Prepare a project repository](section-03)
 
+Then we move on to introduce fundamental requirements for running a production service on AWS:
+
+- Section 3: [Prepare a project repository](section-03)
+- Section 4: [Using AWS Certificate Manager (ACM) to deploy SSL/TLS certificates](section-04)
 
 # Architecture Overview
 
@@ -38,6 +41,12 @@ Running single app on ECS Fargate launch type with a high availability design.
 Running single app on ECS EC2 launch type with a high availability design.
 
 ![](./section-02/images/architecture-diagram-section-2.png)
+
+## Section 4: Using AWS Certificate Manager (ACM) to deploy SSL/TLS certificates
+
+Have SSL/TLS connection is the basic implementation nowadays.
+
+![](./section-04/images/architecture-diagram-section-4.png)
 
 ---
 

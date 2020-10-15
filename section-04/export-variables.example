@@ -1,0 +1,8 @@
+export AWS_ACCOUNT_ID=123456789012
+export AWS_DEFAULT_PROFILE="laravel-on-aws-ecs-workshops"
+
+export VERSION_OS=buster
+export VERSION_PHP_FPM=7.4.10
+export VERSION_NGINX=1.18.0
+
+export THIS_DEPLOYMENT_ENV="dev"
