@@ -39,7 +39,8 @@ Duplicate files from workshop section 4 folder:
 
 ❯ cd section-04
 
-# If your project repo path is different than the folder design in [Section 3](../section-03/), please modify the path below.
+# If your project repo path is different than the folder design in Section 3, 
+# please modify the path below.
 ❯ cp -r * ../../my-laravel-on-ecs
 ❯ cp -r .* ../../my-laravel-on-ecs
 
@@ -55,24 +56,40 @@ Duplicate files from workshop section 4 folder:
 /xxx/xxx/xxx/my-laravel-on-ecs
 
 # Switch to the CDK folder of your project repo
-> cd cdk
+❯ cd cdk
 
 # If you have duplicated this file, you can skip this step
-> cp export-variables.example export-variables
+❯ cp export-variables.example export-variables
 ```
 
 Edit the file `my-laravel-on-ecs/cdk/export-variables` and modify the value of `THIS_DEPLOYMENT_DOMAINNAME` to be the domain name in your case. For example, in my case will be `export THIS_DEPLOYMENT_DOMAINNAME="ernestchiang.com"`.
 
 ```
-> source export-variables
+❯ source export-variables
+```
+
+Before the deployment, let's have a git commit to record this moment:
+
+```
+❯ cd ..
+❯ pwd
+/xxx/xxx/xxx/my-laravel-on-ecs
+
+❯ git add .
+
+❯ git commit -m 'section 4'
 ```
 
 ## Step 4.3: Deployment
 
+```
+❯ npm install
+```
+
 Now, it's time to bootstrap the cdk:
 
 ```
-> cdk bootstrap
+❯ cdk bootstrap
  ⏳  Bootstrapping environment aws://111111111111/us-west-2...
 CDKToolkit: creating CloudFormation changeset...
 [██████████████████████████████████████████████████████████] (3/3)
@@ -83,13 +100,13 @@ CDKToolkit: creating CloudFormation changeset...
 Synth:
 
 ```
-> cdk synth
+❯ cdk synth
 ```
 
 Now, it's time to deploy :)
 
 ```
-> cdk deploy
+❯ cdk deploy
 
 # follow the instruction on the CLI, usually need to press `y`.
 
@@ -134,6 +151,8 @@ Then we can visit the CNAME to check it out at `https://mylaravel.your_domain_na
 ![](./images/screenshot-secure.png)
 
 Great job! We are ready to start [Section 5](../section-05/) :)
+
+If you are not going to the next section right now, please do remember to run `cdk destroy`.
 
 ### Learning Station
 

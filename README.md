@@ -25,6 +25,7 @@ Then we move on to introduce fundamental requirements for running a production s
 
 - Section 3: [Prepare a project repository](section-03)
 - Section 4: [Using AWS Certificate Manager (ACM) to deploy SSL/TLS certificates](section-04)
+- Section 5: [Enable Laravel Logging](section-05)
 
 # Architecture Overview
 
@@ -47,6 +48,12 @@ Running single app on ECS EC2 launch type with a high availability design.
 Have SSL/TLS connection is the basic implementation nowadays.
 
 ![](./section-04/images/architecture-diagram-section-4.png)
+
+## Section 5: Enable Laravel Logging
+
+Direct Laravel logs in the container to Amazon CloudWatch Logs.
+
+![](./section-05/images/architecture-diagram-section-5.png)
 
 ---
 

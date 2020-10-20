@@ -65,6 +65,14 @@ Here is the current project folder structure in your project folder:
 1 directory, 0 files
 ```
 
+Let's have a git commit for current state. It will be helpful for comparison in the following sections.
+
+```
+❯ git add .
+
+❯ git commit -m 'init src'
+```
+
 ## Step 3.4: Folder structure and usage
 
 In our upcoming sections of the workshop, the only thing you need to do is to protect your project source code in the `src` folder. We may duplicate/remove/delete/modify files and folders out of the `src` folder but under your project folder time by time.
@@ -74,8 +82,12 @@ The idea is that we will duplicate like `section-04` folder under our workshop i
 The way to clean up all the files and folders except your `src` folder is:
 
 ```
-❯ find . ! -name 'src' -type d -maxdepth 1 -exec rm -rf {} +
-❯ find . ! -name 'src' -type f -maxdepth 1 -exec rm -f {} +
+# Make sure you are at project repo base folder
+❯ pwd
+/xxx/xxx/xxx/my-laravel-on-ecs
+
+❯ find . ! -name 'src' ! -name '.git' -type d -maxdepth 1 -exec rm -rf {} +
+❯ find . ! -name 'src' ! -name '.git' -type f -maxdepth 1 -exec rm -f {} +
 ```
 
 Great! We are ready to start [Section 4](../section-04/) :)

@@ -1,0 +1,5 @@
+export AWS_DEFAULT_PROFILE="laravel-on-aws-ecs-workshops"
+
+export THIS_DEPLOYMENT_ENV="dev"
+export THIS_DEPLOYMENT_NAMESPACE="myLaravel"
+export THIS_DEPLOYMENT_DOMAINNAME="your_domain_name_here.com"

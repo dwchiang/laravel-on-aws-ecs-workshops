@@ -61,14 +61,14 @@ Before our building the docker image, let's **configure** environment variables 
 - You need to edit the file `export-variables` to fit your situation. Especially the `AWS_ACCOUNT_ID` value. If you don't know your AWS Account ID, use this AWS CLI command: `aws sts get-caller-identity`.
 
 ```
-> cp export-variables.example export-variables
-> source export-variables
+❯ cp export-variables.example export-variables
+❯ source export-variables
 ```
 
 Now it's time to **build** the docker image:
 
 ```
-> ./build.sh
+❯ ./build.sh
 
 ...
 ...
@@ -84,11 +84,11 @@ my-laravel-on-aws-ecs-workshop   latest                               3bc757f1xx
 If you get successfully built, then we can make it run:
 
 ```
-> make run
+❯ make run
 
 or
 
-> docker run --cpus=1 --memory=512m -p 8080:80 my-laravel-on-aws-ecs-workshop:latest
+❯ docker run --cpus=1 --memory=512m -p 8080:80 my-laravel-on-aws-ecs-workshop:latest
 ```
 
 Now, you are running Laravel on a container on your local machine. Please visit this URL `http://localhost:8080/` (or `http://127.0.0.1:8080/`) in your browser.
@@ -107,10 +107,14 @@ Once you can build and run the laravel container successfully on your local mach
 - If you want to know the details of the commands, feel free to take a look at `publish` section in `Makefile` file.
 
 ```
-> source export-variables
-> aws configure get laravel-on-aws-ecs-workshops.region
-> make version
-> make publish
+❯ source export-variables
+
+❯ aws configure get laravel-on-aws-ecs-workshops.region
+us-west-2
+
+❯ make version
+
+❯ make publish
 ```
 
 You can check at Amazon ECR service in AWS Management Console.
@@ -149,20 +153,22 @@ So that we can focus on our application first, and extend each services from one
 Let's get into the `./section-02/cdk` folder:
 
 ```
-> cd cdk
-> cp export-variables.example export-variables
+❯ cd cdk
+❯ cp export-variables.example export-variables
 ```
 
 Take a look in the file `./section-02/cdk/export-variables`. You don't need to modify this file yet for now. If you are using different AWS profile name, you can edit this file to fit in your case. Next, we are going to load the environment variables:
 
 ```
-> source export-variables
+❯ source export-variables
+
+❯ npm install
 ```
 
 Now, it's time to bootstrap the cdk:
 
 ```
-> cdk bootstrap
+❯ cdk bootstrap
  ⏳  Bootstrapping environment aws://111111111111/us-west-2...
 CDKToolkit: creating CloudFormation changeset...
 [██████████████████████████████████████████████████████████] (3/3)
@@ -173,13 +179,13 @@ CDKToolkit: creating CloudFormation changeset...
 Synth:
 
 ```
-> cdk synth
+❯ cdk synth
 ```
 
 Now, it's time to deploy :)
 
 ```
-> cdk deploy
+❯ cdk deploy
 
 # follow the instruction on the CLI, usually need to press `y`.
 
@@ -208,7 +214,7 @@ You did a great job! Let's heading to [Section 3](../section-03/)!
 If you want to take a rest for now, please remember to destory the deployment of this section by using:
 
 ```
-> cdk destroy
+❯ cdk destroy
 ```
 
 You can double check if all the resources are cleaned up by visiting CloudFormation service in your AWS Management Console with the same AWS Region you assigned in AWS CLI.
