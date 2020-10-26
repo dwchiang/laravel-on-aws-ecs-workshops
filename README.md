@@ -26,6 +26,7 @@ Then we move on to introduce fundamental requirements for running a production s
 - Section 3: [Prepare a project repository](section-03)
 - Section 4: [Using AWS Certificate Manager (ACM) to deploy SSL/TLS certificates](section-04)
 - Section 5: [Enable Laravel Logging](section-05)
+- Section 6: [Handling Environment Variables](section-06)
 
 # Architecture Overview
 
