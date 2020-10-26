@@ -6,6 +6,7 @@ LABEL maintainer="Ernest Chiang <me@ernestchiang.com>"
 ARG VERSION_PHP_FPM_MINOR
 ARG VERSION_OS
 ENV VERSION_OS=${VERSION_OS} 
+ARG ENV_TYPE
 
 ### ----------------------------------------------------------
 ### PHP
@@ -82,13 +83,16 @@ COPY src /var/www/html
 
 RUN set -x && \
     if [ -f "/var/www/html/composer.lock" ]; then \
-        if [ "${APP_ENV}" == "development" ] || [ "${APP_ENV}" == "dev" || "${APP_ENV}" == "staging" ] || [ "${APP_ENV}" == "stage" ]; then \
-            composer global require hirak/prestissimo ; \
-            composer install --working-dir=/var/www/html ; \
-        else \
-            composer global require hirak/prestissimo ; \
-            composer install --no-dev --working-dir=/var/www/html ; \
-        fi \
+        case ${ENV_TYPE} in \
+            development|dev|staging|stage) \
+                composer global require hirak/prestissimo ; \
+                composer install --working-dir=/var/www/html ; \
+                ;; \
+            *) \
+                composer global require hirak/prestissimo ; \
+                composer install --no-dev --working-dir=/var/www/html ; \
+                ;; \
+        esac \
     fi && \
     # resolve: The stream or file "/var/www/html/storage/logs/laravel.log" could not be opened in append mode: failed to open stream: Permission denied
     touch /var/www/html/storage/logs/laravel.log && \

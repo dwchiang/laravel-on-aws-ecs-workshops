@@ -94,6 +94,9 @@ RUN set -x && \
                 ;; \
         esac \
     fi && \
+    if [ -f "/var/www/html/.env.docker-only-app-name" ]; then \
+        cp /var/www/html/.env.docker-only-app-name /var/www/html/.env ; \
+    fi && \
     # resolve: The stream or file "/var/www/html/storage/logs/laravel.log" could not be opened in append mode: failed to open stream: Permission denied
     touch /var/www/html/storage/logs/laravel.log && \
     touch /var/log/cron.log && \

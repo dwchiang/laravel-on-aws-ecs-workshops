@@ -2,8 +2,8 @@
 
 ENV_TYPE               := $(THIS_DEPLOYMENT_ENV)
 
-APP_IMAGE_NAME         := my-laravel-on-aws-ecs-workshop
-APP_REPO_NAME           := $(APP_IMAGE_NAME)-$(ENV_TYPE)
+APP_IMAGE_NAME         := $(APP_IMAGE_NAME)
+APP_REPO_NAME          := $(APP_IMAGE_NAME)-$(ENV_TYPE)
 
 VERSION_PHP_FPM        := $(VERSION_PHP_FPM)
 VERSION_PHP_FPM_MINOR  := $(shell cut -d '.' -f 1 <<< $(VERSION_PHP_FPM)).$(shell cut -d '.' -f 2 <<< $(VERSION_PHP_FPM))
@@ -26,7 +26,7 @@ ECR_REPO_IMAGE_HASH    := $(ECR_URL)/$(APP_IMAGE_NAME)-$(ENV_TYPE):$(GIT_COMMIT_
 ECR_URL_CN             := $(AWS_ACCOUNT_ID).dkr.ecr.$(AWS_REGION).amazonaws.com.cn
 
 help:
-	@ echo 'Welcome to Makefile of my-laravel-on-aws-ecs-workshop Section 2'
+	@ echo 'Welcome to Makefile of my-laravel-on-aws-ecs-workshop Section 6'
 	@ echo
 	@ echo 'Usage: make [command]'
 	@ echo

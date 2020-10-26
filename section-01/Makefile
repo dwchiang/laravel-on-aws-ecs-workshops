@@ -57,6 +57,7 @@ build: version
 	time docker build \
 	--build-arg VERSION="${VERSION}" \
 	--build-arg VERSION_PHP_FPM_MINOR="${VERSION_PHP_FPM_MINOR}" \
+	--build-arg ENV_TYPE="${ENV_TYPE}" \
 	-f Dockerfile \
 	-t $(APP_IMAGE_NAME):latest .
 

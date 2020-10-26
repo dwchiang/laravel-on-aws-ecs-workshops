@@ -26,7 +26,7 @@ ECR_REPO_IMAGE_HASH    := $(ECR_URL)/$(APP_IMAGE_NAME)-$(ENV_TYPE):$(GIT_COMMIT_
 ECR_URL_CN             := $(AWS_ACCOUNT_ID).dkr.ecr.$(AWS_REGION).amazonaws.com.cn
 
 help:
-	@ echo 'Welcome to Makefile of my-laravel-on-aws-ecs-workshop Section 1'
+	@ echo 'Welcome to Makefile of my-laravel-on-aws-ecs-workshop Section 5'
 	@ echo
 	@ echo 'Usage: make [command]'
 	@ echo
@@ -57,6 +57,7 @@ build: version
 	time docker build \
 	--build-arg VERSION="${VERSION}" \
 	--build-arg VERSION_PHP_FPM_MINOR="${VERSION_PHP_FPM_MINOR}" \
+	--build-arg ENV_TYPE="${ENV_TYPE}" \
 	-f Dockerfile \
 	-t $(APP_IMAGE_NAME):latest .
 

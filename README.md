@@ -55,6 +55,12 @@ Direct Laravel logs in the container to Amazon CloudWatch Logs.
 
 ![](./section-05/images/architecture-diagram-section-5.png)
 
+## Section 6: Handling Environment Variables
+
+Bridging Laravel `.env` file, ECS Container Definition `valueFrom` and AWS SSM Parameter Store to load environment variables.
+
+![](./section-06/images/architecture-diagram-section-6.png)
+
 ---
 
 # Preparations
@@ -116,6 +122,18 @@ Please well prepare the preparations before attending the workshop.
     ```
 
   - [ ] (Optional) Check: `nvm ls`
+
+- [ ] Having [AWS CDK](https://www.ernestchiang.com/en/notes/aws/cdk/)
+  - [ ] Check : `cdk --version`
+
+- [ ] Having [jq](https://stedolan.github.io/jq/download/) to parse json outputs from AWS CLI.
+  - Required since Section 6.
+  - [ ] Check: `jq --version`
+
+    ```
+    ❯ jq --version
+    jq-1.6
+    ```
 
 ---
 
