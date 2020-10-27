@@ -1,4 +1,0 @@
-export AWS_DEFAULT_PROFILE="laravel-on-aws-ecs-workshops"
-
-export THIS_DEPLOYMENT_ENV="dev"
-export THIS_DEPLOYMENT_NAMESPACE="section1"

@@ -1,8 +1,15 @@
-export AWS_ACCOUNT_ID=123456789012
+# AWS
 export AWS_DEFAULT_PROFILE="laravel-on-aws-ecs-workshops"
 
+# Common
+export APP_IMAGE_NAME="my-laravel-on-aws-ecs-workshop"
+
+# Docker
 export VERSION_OS=buster
 export VERSION_PHP_FPM=7.4.10
 export VERSION_NGINX=1.18.0
 
+# CDK
 export THIS_DEPLOYMENT_ENV="dev"
+export THIS_DEPLOYMENT_NAMESPACE="myLaravel"
+export THIS_DEPLOYMENT_DOMAINNAME="your_domain_name_here.com"

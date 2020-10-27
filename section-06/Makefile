@@ -12,8 +12,8 @@ VERSION_OS             := $(VERSION_OS)
 VERSION                := $(VERSION_PHP_FPM)-fpm-$(VERSION_NGINX)-nginx-$(VERSION_OS)
 
 GIT_COMMIT_HASH        := $(shell git rev-parse --short HEAD)
-AWS_REGION             := $(shell aws configure get laravel-on-aws-ecs-workshops.region)
-AWS_ACCOUNT_ID         := $(AWS_ACCOUNT_ID)
+AWS_REGION             := $(shell aws configure get ${AWS_DEFAULT_PROFILE}.region)
+AWS_ACCOUNT_ID         := $(shell aws sts get-caller-identity | jq --raw-output '.Account')
 
 BASE_VENDOR            := dwchiang
 BASE_PROJECT           := nginx-php-fpm

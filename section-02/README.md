@@ -2,12 +2,12 @@
 
 # Objective
 
-Comparing to section 1 (running on ECS Fargate launch type), we are going to run a single Laravel app on ECS EC2 launch type with a high availability architecture design. 
+Comparing to section 1 (running on ECS **Fargate launch type**), we are going to run a single Laravel app on ECS **EC2 launch type** with a high availability architecture design. 
 
 # Highlights
 
 - Almost the same architecture with section 1.
-- Change from ECS Fargate launch type to ECS EC2 launch type.
+- Change from ECS Fargate launch type to ECS **EC2 launch type**.
 
 # Architecture Overview
 
@@ -25,6 +25,9 @@ We basically will follow almost the same steps with [Section 1](../section-1) ex
 We will do all the **Section 2** works in the folder `./section-02/`:
 
 ```
+❯ pwd
+/xxx/xxx/xxx/laravel-on-aws-ecs-workshops
+
 ❯ cd section-02
 ```
 
@@ -37,12 +40,18 @@ Let's create a new Laravel project in the folder `./secion-02/src/`:
 - You can use any version of Laravel you preferred. In this workshop, we will use the latest TLS version.
 
 ```
+❯ pwd
+/xxx/xxx/xxx/laravel-on-aws-ecs-workshops/section-02
+
 ❯ composer create-project --prefer-dist laravel/laravel:6.18.35 src
 ```
 
 Here is the current project folder structure in `./section-02`:
 
 ```
+❯ pwd
+/xxx/xxx/xxx/laravel-on-aws-ecs-workshops/section-02
+
 ❯ tree --dirsfirst -L 1
 .
 ├── cdk
@@ -51,24 +60,31 @@ Here is the current project folder structure in `./section-02`:
 ├── Dockerfile
 ├── Makefile
 ├── README.md
-├── build.sh
 └── export-variables.example
 ```
 
 Before our building the docker image, let's **configure** environment variables that will be used in the build. 
 
 - Please duplicate the example file of variables from `export-variables.example` to `export-variables`, then load it by `source` command. 
-- You need to edit the file `export-variables` to fit your situation. Especially the `AWS_ACCOUNT_ID` value. If you don't know your AWS Account ID, use this AWS CLI command: `aws sts get-caller-identity`.
+- You may need to edit the file `export-variables` to fit your situation. Especially the `AWS_DEFAULT_PROFILE` value. 
 
 ```
+# duplicate the example file of variables
 ❯ cp export-variables.example export-variables
+
+# edit
+❯ vim export-variables
+
+# load
 ❯ source export-variables
 ```
 
 Now it's time to **build** the docker image:
 
 ```
-❯ ./build.sh
+❯ make version
+
+❯ make build
 
 ...
 ...
@@ -86,9 +102,13 @@ If you get successfully built, then we can make it run:
 ```
 ❯ make run
 
-or
+# or
 
 ❯ docker run --cpus=1 --memory=512m -p 8080:80 my-laravel-on-aws-ecs-workshop:latest
+
+# or change to use another port other than 8080, for example 8082
+
+❯ docker run --cpus=1 --memory=512m -p 8082:80 my-laravel-on-aws-ecs-workshop:latest
 ```
 
 Now, you are running Laravel on a container on your local machine. Please visit this URL `http://localhost:8080/` (or `http://127.0.0.1:8080/`) in your browser.
@@ -109,8 +129,7 @@ Once you can build and run the laravel container successfully on your local mach
 ```
 ❯ source export-variables
 
-❯ aws configure get laravel-on-aws-ecs-workshops.region
-us-west-2
+❯ aws configure get ${AWS_DEFAULT_PROFILE}.region
 
 ❯ make version
 
@@ -154,13 +173,9 @@ Let's get into the `./section-02/cdk` folder:
 
 ```
 ❯ cd cdk
-❯ cp export-variables.example export-variables
-```
 
-Take a look in the file `./section-02/cdk/export-variables`. You don't need to modify this file yet for now. If you are using different AWS profile name, you can edit this file to fit in your case. Next, we are going to load the environment variables:
-
-```
-❯ source export-variables
+❯ pwd
+/xxx/xxx/xxx/laravel-on-aws-ecs-workshops/section-02/cdk
 
 ❯ npm install
 ```
@@ -196,7 +211,7 @@ Outputs:
 DevSection2LaravelOnAwsWorkshopStack.DevSection2AlbDnsName = DevSe-DevSe-11AOKXxxxxxxx-1234567890.us-west-2.elb.amazonaws.com
 ```
 
-Now you can test in your browser by visiting `http://DevSe-DevSe-11AOKXxxxxxxx-1234567890.us-west-2.elb.amazonaws.com/`. You will see the same Laravel page with your running on local machine.
+Now you can test in your browser by visiting `http://DevSe-DevSe-11AOKXxxxxxxx-1234567890.us-west-2.elb.amazonaws.com/`. You will see the same Laravel page with your running on local machine. (Note: please make sure you are using `http://` insteads of `https://` for now.)
 
 ### Learning Station
 
@@ -217,11 +232,12 @@ If you want to take a rest for now, please remember to destory the deployment of
 ❯ cdk destroy
 ```
 
-You can double check if all the resources are cleaned up by visiting CloudFormation service in your AWS Management Console with the same AWS Region you assigned in AWS CLI.
+- [ ] Check: You can double check if all the resources are cleaned up by visiting CloudFormation service in your AWS Management Console with the same AWS Region you assigned in AWS CLI.
 
-[TODO] Clean up ECR repo
+- [ ] Check: If you are not going to continue the following sections of this workshop, please remember to remove the docker images in your ECR by logging into your AWS Management Console > ECR.
 
 # Reference
 
 - Study Notes: [Amazon Elastic Container Service (Amazon ECS)](https://www.ernestchiang.com/en/notes/aws/ecs/) 
 - Study Notes: [AWS Cloud Development Kit (AWS CDK)](https://www.ernestchiang.com/en/notes/aws/cdk/)
+- If you don't know your AWS Account ID, use this AWS CLI command: `aws sts get-caller-identity`.

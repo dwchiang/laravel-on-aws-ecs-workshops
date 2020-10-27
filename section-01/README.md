@@ -2,11 +2,11 @@
 
 # Objective
 
-We are going to run a single Laravel app on ECS Fargate launch type with a high availability architecture design. 
+We are going to run a single Laravel app on ECS **Fargate launch type** with a high availability architecture design. 
 
 # Highlights
 
-- Application-first design.
+- **Application-first design.**
 - To manage the cost of this workshop, we reduce the number of NAT Gateway to only one.
 
 # Architecture Overview
@@ -23,6 +23,9 @@ We are going to run a single Laravel app on ECS Fargate launch type with a high 
 We will do all the **Section 1** works in the folder `./section-01/`:
 
 ```
+❯ pwd
+/xxx/xxx/xxx/laravel-on-aws-ecs-workshops
+
 ❯ cd section-01
 ```
 
@@ -33,12 +36,18 @@ Let's create a new Laravel project in the folder `./secion-01/src/`:
 - You can use any version of Laravel you preferred. In this workshop, we will use the latest TLS version.
 
 ```
+❯ pwd
+/xxx/xxx/xxx/laravel-on-aws-ecs-workshops/section-01
+
 ❯ composer create-project --prefer-dist laravel/laravel:6.18.35 src
 ```
 
 Here is the current project folder structure in `./section-01`:
 
 ```
+❯ pwd
+/xxx/xxx/xxx/laravel-on-aws-ecs-workshops/section-01
+
 ❯ tree --dirsfirst -L 1
 .
 ├── cdk
@@ -47,24 +56,31 @@ Here is the current project folder structure in `./section-01`:
 ├── Dockerfile
 ├── Makefile
 ├── README.md
-├── build.sh
 └── export-variables.example
 ```
 
 Before our building the docker image, let's **configure** environment variables that will be used in the build. 
 
 - Please duplicate the example file of variables from `export-variables.example` to `export-variables`, then load it by `source` command. 
-- You need to edit the file `export-variables` to fit your situation. Especially the `AWS_ACCOUNT_ID` value. If you don't know your AWS Account ID, use this AWS CLI command: `aws sts get-caller-identity`.
+- You may need to edit the file `export-variables` to fit your situation. Especially the `AWS_DEFAULT_PROFILE` value. 
 
 ```
-> cp export-variables.example export-variables
-> source export-variables
+# duplicate the example file of variables
+❯ cp export-variables.example export-variables
+
+# edit
+❯ vim export-variables
+
+# load
+❯ source export-variables
 ```
 
 Now it's time to **build** the docker image:
 
 ```
-> ./build.sh
+❯ make version
+
+❯ make build
 
 ...
 ...
@@ -80,11 +96,15 @@ my-laravel-on-aws-ecs-workshop   latest                               3bc757f1xx
 If you get successfully built, then we can make it run:
 
 ```
-> make run
+❯ make run
 
-or
+# or
 
-> docker run --cpus=1 --memory=512m -p 8080:80 my-laravel-on-aws-ecs-workshop:latest
+❯ docker run --cpus=1 --memory=512m -p 8080:80 my-laravel-on-aws-ecs-workshop:latest
+
+# or change to use another port other than 8080, for example 8082
+
+❯ docker run --cpus=1 --memory=512m -p 8082:80 my-laravel-on-aws-ecs-workshop:latest
 ```
 
 Now, you are running Laravel on a container on your local machine. Please visit this URL `http://localhost:8080/` (or `http://127.0.0.1:8080/`) in your browser.
@@ -103,10 +123,13 @@ Once you can build and run the laravel container successfully on your local mach
 - If you want to know the details of the commands, feel free to take a look at `publish` section in `Makefile` file.
 
 ```
-> source export-variables
-> aws configure get laravel-on-aws-ecs-workshops.region
-> make version
-> make publish
+❯ source export-variables
+
+❯ aws configure get ${AWS_DEFAULT_PROFILE}.region
+
+❯ make version
+
+❯ make publish
 ```
 
 You can check at Amazon ECR service in AWS Management Console.
@@ -143,20 +166,18 @@ So that we can focus on our application first, and extend each services from one
 Let's get into the `./section-01/cdk` folder:
 
 ```
-> cd cdk
-> cp export-variables.example export-variables
-```
+❯ cd cdk
 
-Take a look in the file `./section-01/cdk/export-variables`. You don't need to modify this file yet for now. If you are using different AWS profile name, you can edit this file to fit in your case. Next, we are going to load the environment variables:
+❯ pwd
+/xxx/xxx/xxx/laravel-on-aws-ecs-workshops/section-01/cdk
 
-```
-> source export-variables
+❯ npm install
 ```
 
 Now, it's time to bootstrap the cdk:
 
 ```
-> cdk bootstrap
+❯ cdk bootstrap
  ⏳  Bootstrapping environment aws://111111111111/us-west-2...
 CDKToolkit: creating CloudFormation changeset...
 [██████████████████████████████████████████████████████████] (3/3)
@@ -167,13 +188,13 @@ CDKToolkit: creating CloudFormation changeset...
 Synth:
 
 ```
-> cdk synth
+❯ cdk synth
 ```
 
 Now, it's time to deploy :)
 
 ```
-> cdk deploy
+❯ cdk deploy
 
 # follow the instruction on the CLI, usually need to press `y`.
 
@@ -184,7 +205,7 @@ Outputs:
 DevSection1LaravelOnAwsWorkshopStack.DevSection1AlbDnsName = DevSe-DevSe-11AOKXxxxxxxx-1234567890.us-west-2.elb.amazonaws.com
 ```
 
-Now you can test in your browser by visiting `http://DevSe-DevSe-11AOKXxxxxxxx-1234567890.us-west-2.elb.amazonaws.com/`. You will see the same Laravel page with your running on local machine.
+Now you can test in your browser by visiting `http://DevSe-DevSe-11AOKXxxxxxxx-1234567890.us-west-2.elb.amazonaws.com/`. You will see the same Laravel page with your running on local machine. (Note: please make sure you are using `http://` insteads of `https://` for now.)
 
 ### Learning Station
 
@@ -202,14 +223,15 @@ You did a great job! Let's heading to [Section 2](../section-02/)!
 If you want to take a rest for now, please remember to destory the deployment of this section by using:
 
 ```
-> cdk destroy
+❯ cdk destroy
 ```
 
-You can double check if all the resources are cleaned up by visiting CloudFormation service in your AWS Management Console with the same AWS Region you assigned in AWS CLI.
+- [ ] Check: You can double check if all the resources are cleaned up by visiting CloudFormation service in your AWS Management Console with the same AWS Region you assigned in AWS CLI.
 
-[TODO] Clean up ECR repo
+- [ ] Check: If you are not going to continue the following sections of this workshop, please remember to remove the docker images in your ECR by logging into your AWS Management Console > ECR.
 
 # Reference
 
 - Study Notes: [Amazon Elastic Container Service (Amazon ECS)](https://www.ernestchiang.com/en/notes/aws/ecs/) 
 - Study Notes: [AWS Cloud Development Kit (AWS CDK)](https://www.ernestchiang.com/en/notes/aws/cdk/)
+- If you don't know your AWS Account ID, use this AWS CLI command: `aws sts get-caller-identity`.

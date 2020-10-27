@@ -41,8 +41,7 @@ Duplicate files from workshop section 4 folder:
 
 # If your project repo path is different than the folder design in Section 3, 
 # please modify the path below.
-❯ cp -r * ../../my-laravel-on-ecs
-❯ cp -r .* ../../my-laravel-on-ecs
+❯ rsync -av --progress ./ ../../my-laravel-on-ecs --exclude images
 
 # Switch to your project repo
 ❯ cd ../../my-laravel-on-ecs
@@ -55,23 +54,20 @@ Duplicate files from workshop section 4 folder:
 ❯ pwd
 /xxx/xxx/xxx/my-laravel-on-ecs
 
-# Switch to the CDK folder of your project repo
-❯ cd cdk
-
-# If you have duplicated this file, you can skip this step
+# If you have duplicated and edit the variable file, you can skip this step
 ❯ cp export-variables.example export-variables
 ```
 
-Edit the file `my-laravel-on-ecs/cdk/export-variables` and modify the value of `THIS_DEPLOYMENT_DOMAINNAME` to be the domain name in your case. For example, in my case will be `export THIS_DEPLOYMENT_DOMAINNAME="ernestchiang.com"`.
+Edit the file `my-laravel-on-ecs/export-variables` and modify the value of `THIS_DEPLOYMENT_DOMAINNAME` to be the domain name in your case. For example, in my case it will be `export THIS_DEPLOYMENT_DOMAINNAME="ernestchiang.com"`.
 
 ```
+# load variables
 ❯ source export-variables
 ```
 
 Before the deployment, let's have a git commit to record this moment:
 
 ```
-❯ cd ..
 ❯ pwd
 /xxx/xxx/xxx/my-laravel-on-ecs
 

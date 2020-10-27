@@ -42,8 +42,7 @@ Duplicate files from workshop section 5 folder:
 
 # If your project repo path is different than the folder design in Section 3, 
 # please modify the path below.
-❯ cp -r * ../../my-laravel-on-ecs
-❯ cp -r .* ../../my-laravel-on-ecs
+❯ rsync -av --progress ./ ../../my-laravel-on-ecs --exclude images
 
 # Switch to your project repo
 ❯ cd ../../my-laravel-on-ecs
@@ -113,18 +112,15 @@ If you have done the step 5.1, you will find a folder named `src-patch` inside o
 ❯ tree --dirsfirst -L 1
 .
 ├── cdk
-├── images
 ├── src
 ├── src-patch
 ├── Dockerfile
 ├── Makefile
 ├── README.md
-├── build.sh
 ├── export-variables
 ├── export-variables.example
-└── package-lock.json
 
-4 directories, 7 files
+3 directories, 5 files
 
 ❯ cd src-patch
 
@@ -148,8 +144,7 @@ We are going to place them into your src folder, and build a new Docker image, a
 ❯ pwd
 /xxx/xxx/xxx/my-laravel-on-ecs/src-patch
 
-❯ cp -r * ../src
-❯ cp -r .* ../src
+❯ rsync -av --progress ./ ../src
 
 # double check
 ❯ cd ..
@@ -185,7 +180,7 @@ and it's time to re-build the Docker image and publish it onto AWS ECR again.
 /xxx/xxx/xxx/my-laravel-on-ecs
 
 ❯ source export-variables
-❯ aws configure get laravel-on-aws-ecs-workshops.region
+❯ aws configure get ${AWS_DEFAULT_PROFILE}.region
 us-west-2
 
 # Double check all the variables before starting the build
@@ -220,8 +215,6 @@ Now, Let's deploy our modified source code on Amazon ECS.
 
 ```
 ❯ cd cdk
-
-❯ source export-variables
 
 ❯ npm install
 

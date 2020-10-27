@@ -26,6 +26,11 @@ Go to your CLI window and find a proper project base location to create your pro
 Create a project folder. You can choose any folder naming but in this workshop, let's say your project name is `my-laravel-on-ecs`:
 
 ```
+❯ pwd
+/xxx/xxx/xxx/laravel-on-aws-ecs-workshops
+
+❯ cd ..
+
 ❯ mkdir my-laravel-on-ecs
 
 ❯ tree --dirsfirst -L 1
@@ -43,6 +48,9 @@ Make sure you are in our project folder right now. If you are not so sure, use `
 Now, we are going to init this project folder as a git repository (repo).
 
 ```
+❯ pwd
+/xxx/xxx/xxx/my-laravel-on-ecs
+
 ❯ git init
 Initialized empty Git repository in /xxx/xxx/xxx/my-laravel-on-ecs/.git/
 ```
@@ -58,6 +66,9 @@ You can use any version of Laravel you preferred. In this workshop, we will use 
 Here is the current project folder structure in your project folder:
 
 ```
+❯ pwd
+/xxx/xxx/xxx/my-laravel-on-ecs
+
 ❯ tree --dirsfirst -L 1
 .
 └── src

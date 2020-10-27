@@ -2,8 +2,8 @@
 
 ENV_TYPE               := $(THIS_DEPLOYMENT_ENV)
 
-APP_IMAGE_NAME         := my-laravel-on-aws-ecs-workshop
-APP_REPO_NAME           := $(APP_IMAGE_NAME)-$(ENV_TYPE)
+APP_IMAGE_NAME         := $(APP_IMAGE_NAME)
+APP_REPO_NAME          := $(APP_IMAGE_NAME)-$(ENV_TYPE)
 
 VERSION_PHP_FPM        := $(VERSION_PHP_FPM)
 VERSION_PHP_FPM_MINOR  := $(shell cut -d '.' -f 1 <<< $(VERSION_PHP_FPM)).$(shell cut -d '.' -f 2 <<< $(VERSION_PHP_FPM))
@@ -12,8 +12,8 @@ VERSION_OS             := $(VERSION_OS)
 VERSION                := $(VERSION_PHP_FPM)-fpm-$(VERSION_NGINX)-nginx-$(VERSION_OS)
 
 GIT_COMMIT_HASH        := $(shell git rev-parse --short HEAD)
-AWS_REGION             := $(shell aws configure get laravel-on-aws-ecs-workshops.region)
-AWS_ACCOUNT_ID         := $(AWS_ACCOUNT_ID)
+AWS_REGION             := $(shell aws configure get ${AWS_DEFAULT_PROFILE}.region)
+AWS_ACCOUNT_ID         := $(shell aws sts get-caller-identity | jq --raw-output '.Account')
 
 BASE_VENDOR            := dwchiang
 BASE_PROJECT           := nginx-php-fpm
