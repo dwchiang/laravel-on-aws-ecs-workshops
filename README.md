@@ -1,3 +1,5 @@
+[![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/dwchiang/laravel-on-aws-ecs-workshops)
+
 # Workshops: Running Laravel on AWS ECS
 
 These workshops assume that we will have multiple workloads on both production and staging environments. We will achieve this goal step by step, section by section.
