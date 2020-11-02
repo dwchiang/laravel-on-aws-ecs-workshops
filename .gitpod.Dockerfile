@@ -9,4 +9,6 @@ RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2
   # install docker
   brew install docker && \
   # install AWS CDK
-  npm install -g aws-cdk
+  npm install -g aws-cdk && \
+  # install tig
+  brew install tig
