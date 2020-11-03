@@ -2,5 +2,5 @@ image:
   file: .gitpod.Dockerfile
 
 tasks:
-  - init: 'echo "git:"; git --version; echo "make:"; make -v; echo "tree:"; tree --version; echo "aws:"; aws --version; echo "jq:"; jq --version; echo "docker:"; docker -v; echo "composer:"; composer -V; echo "node:"; node -v; echo "npm:"; npm -v; echo "cdk:"; cdk --version'
-    command: 'echo "Enjoy the workshop :)"'
+  - init: 'echo "--- git ---"; git --version; echo "--- make ---"; make -v; echo "--- tree ---"; tree --version; echo "--- aws ---"; aws --version; echo "--- jq ---"; jq --version; echo "--- docker ---"; docker -v; echo "--- composer ---"; composer -V; echo "--- node ---"; node -v; echo "--- npm ---"; npm -v; echo "--- cdk ---"; cdk --version'
+    command: 'echo; echo "Enjoy the workshop :)"'
