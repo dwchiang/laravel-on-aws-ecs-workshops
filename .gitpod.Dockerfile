@@ -8,5 +8,7 @@ RUN brew install awscli && \
   brew install docker && \
   # install AWS CDK
   npm install -g aws-cdk && \
+  # install composer
+  brew install composer && \
   # install tig
   brew install tig

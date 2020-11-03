@@ -77,14 +77,41 @@ Please well prepare the preparations before attending the workshop.
         ```
 
   - AWS SSO Way
-    - [ ] Enable AWS SSO in AWS Organizations and AWS SSO in AWS Management Console. Create an SSO user and grant admin permissions on the user. Then you can login with this SSO account in AWS CLI.
+    - [ ] Enable AWS SSO in AWS Organizations and AWS SSO in AWS Management Console. Create an SSO user and grant admin permissions on the user. 
+    - [ ] Then you can login with this SSO account in AWS CLI:
+    
 
         ```
         # configure AWS SSO in your AWS CLI
         ❯ aws configure sso --profile laravel-on-aws-ecs-workshops
+        SSO start URL [None]: https://your-sso-portal-short-name.awsapps.com/start                                                             
+        SSO Region [None]: us-west-2 #please change to use the corresponding region of your AWS SSO                                                                                         
+        Attempting to automatically open the SSO authorization page in your default browser.
+        If the browser does not open or you wish to use a different device to authorize this request, open the following URL:
 
-        # get credentials
-        ❯ ./utils/refresh_aws_credentials.sh
+        https://device.sso.us-west-2.amazonaws.com/
+
+        Then enter the code:
+
+        HRCB-WSLR
+        There are 6 AWS accounts available to you.
+        Using the account ID 123456789012
+        The only role available to you is: AdministratorAccess
+        Using the role name "AdministratorAccess"
+        CLI default client Region [None]: us-west-2                                                                          
+        CLI default output format [None]: json                                                                               
+
+        To use this profile, specify the profile name using --profile, as shown:
+
+        aws s3 ls --profile laravel-on-aws-ecs-workshops
+        ```
+
+        ```
+        # refrech credentials into your ~/.aws/credentials
+        ❯ ./utils/refresh_aws_credentials.sh laravel-on-aws-ecs-workshops
+        => requesting temporary credentials
+        => updating ~/.aws/credentials as profile laravel-on-aws-ecs-workshops
+        [OK] done
         ```
 
 - [ ] Having [jq](https://stedolan.github.io/jq/download/) to parse json outputs from AWS CLI.

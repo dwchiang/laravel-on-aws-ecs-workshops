@@ -6,8 +6,13 @@
 #
 # Before using this script, 
 # please do make sure that the AWS SSO is configured in your CLI by `aws configure sso`.
+#
+# Usage:
+#
+# > ./refresh_aws_credentials.sh {your-AWS-profile-name}
+#
 
-profile=${AWS_PROFILE-default}
+profile=$1
 temp_identity=$(aws --profile "$profile" sts get-caller-identity)
 account_id=$(echo $temp_identity | jq -r .Arn | cut -d: -f5)
 assumed_role_name=$(echo $temp_identity | jq -r .Arn | cut -d/ -f2)
