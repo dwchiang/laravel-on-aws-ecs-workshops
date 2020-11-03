@@ -34,7 +34,7 @@ Please well prepare the preparations before attending the workshop.
 - [ ] git clone this repository to your local machine: `git clone git@github.com:dwchiang/laravel-on-aws-ecs-workshops.git`
 
 - [ ] Having [GNU Make](https://www.gnu.org/software/make/).
-    - [ ] Check: `make -v`
+  - [ ] Check: `make -v`
 
     ```
     ❯ make -v
@@ -42,7 +42,7 @@ Please well prepare the preparations before attending the workshop.
     ```
 
 - [ ] Having [tree](http://mama.indstate.edu/users/ice/tree/) command.
-    - [ ] Check: `tree --version`
+  - [ ] Check: `tree --version`
 
     ```
     ❯ tree --version
@@ -56,25 +56,36 @@ tree v1.8.0 (c) 1996 - 2018 by Steve Baker, Thomas Moore, Francesc Rocher, Flori
     ❯ aws --version
     aws-cli/2.0.59 Python/3.9.0 Darwin/19.6.0 source/x86_64
     ```
+  - Tranditional Way
+    - [ ] Please create a profile named `laravel-on-aws-ecs-workshops` for this workshop in your AWS CLI v2. (If you are not using the same profile name, please update the profile name in the `export-variables` file of each section folder or your project repo folder.)
+    - [ ] Check: `~/.aws/credentials`
 
-  - [ ] Please create a profile named `laravel-on-aws-ecs-workshops` for this workshop in your AWS CLI v2. (If you are not using the same profile name, please update the profile name in the `export-variables` file of each section folder or your project repo folder.)
-  - [ ] Check: `~/.aws/credentials`
+        ```
+        [laravel-on-aws-ecs-workshops]
+        aws_access_key_id = AKIAxxxxxxxxxxxxxxxx
+        aws_secret_access_key =
+        ```
 
-    ```
-    [laravel-on-aws-ecs-workshops]
-    aws_access_key_id = AKIAxxxxxxxxxxxxxxxx
-    aws_secret_access_key =
-    ```
+    - [ ] Check: `~/.aws/config`
+        - Recommended to choose a region that supports EC2 `t4g` instance type (ARM).
 
-  - [ ] Check: `~/.aws/config`
-    - Recommended to choose a region that supports EC2 `t4g` instance type (ARM).
+        ```
+        [profile laravel-on-aws-ecs-workshops]
+        region = us-west-2
+        output = json
+        cli_pager =
+        ```
 
-    ```
-    [profile laravel-on-aws-ecs-workshops]
-    region = us-west-2
-    output = json
-    cli_pager =
-    ```
+  - AWS SSO Way
+    - [ ] Enable AWS SSO in AWS Organizations and AWS SSO in AWS Management Console. Create an SSO user and grant admin permissions on the user. Then you can login with this SSO account in AWS CLI.
+
+        ```
+        # configure AWS SSO in your AWS CLI
+        ❯ aws configure sso --profile laravel-on-aws-ecs-workshops
+
+        # get credentials
+        ❯ ./utils/refresh_aws_credentials.sh
+        ```
 
 - [ ] Having [jq](https://stedolan.github.io/jq/download/) to parse json outputs from AWS CLI.
   - [ ] Check: `jq --version`
