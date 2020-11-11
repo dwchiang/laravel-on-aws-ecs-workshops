@@ -1,0 +1,9 @@
+{
+    "name": "Ernest Workshop",
+    "image": "dwchiang/workshop:latest",
+    "mounts": [
+        "source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind"
+    ],
+    "containerUser": "workshop",
+    "remoteUser": "workshop",
+}
