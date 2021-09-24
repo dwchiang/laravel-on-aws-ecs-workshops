@@ -9,7 +9,7 @@ VERSION_PHP_FPM        := $(VERSION_PHP_FPM)
 VERSION_PHP_FPM_MINOR  := $(shell cut -d '.' -f 1 <<< $(VERSION_PHP_FPM)).$(shell cut -d '.' -f 2 <<< $(VERSION_PHP_FPM))
 VERSION_NGINX          := $(VERSION_NGINX)
 VERSION_OS             := $(VERSION_OS)
-VERSION                := $(VERSION_PHP_FPM)-fpm-$(VERSION_NGINX)-nginx-$(VERSION_OS)
+VERSION                := $(VERSION_PHP_FPM)-fpm-$(VERSION_OS)-nginx-$(VERSION_NGINX)
 
 GIT_COMMIT_HASH        := $(shell git rev-parse --short HEAD)
 AWS_REGION             := $(shell aws configure get ${AWS_DEFAULT_PROFILE}.region)

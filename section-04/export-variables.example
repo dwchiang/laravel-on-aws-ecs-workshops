@@ -6,8 +6,8 @@ export APP_IMAGE_NAME="my-laravel-on-aws-ecs-workshop"
 
 # Docker
 export VERSION_OS=buster
-export VERSION_PHP_FPM=7.4.10
-export VERSION_NGINX=1.18.0
+export VERSION_PHP_FPM=7.4.23
+export VERSION_NGINX=1.21.1
 
 # CDK
 export THIS_DEPLOYMENT_ENV="dev"
