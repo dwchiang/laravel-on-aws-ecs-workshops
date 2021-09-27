@@ -60,7 +60,7 @@ Initialized empty Git repository in /xxx/xxx/xxx/my-laravel-on-ecs/.git/
 You can use any version of Laravel you preferred. In this workshop, we will use the latest TLS version.
 
 ```
-❯ composer create-project --prefer-dist laravel/laravel:6.18.35 src
+❯ composer create-project --prefer-dist laravel/laravel:8.6.1 src
 ```
 
 Here is the current project folder structure in your project folder:

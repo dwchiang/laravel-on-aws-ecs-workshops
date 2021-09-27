@@ -1,4 +1,4 @@
-ARG VERSION=7.4.10-fpm-1.18.0-nginx-buster
+ARG VERSION=7.4.23-fpm-buster-nginx-1.21.1
 FROM dwchiang/nginx-php-fpm:${VERSION}
 
 LABEL maintainer="Ernest Chiang <me@ernestchiang.com>"
@@ -82,21 +82,23 @@ COPY src/public /usr/share/nginx/html
 COPY src /var/www/html
 
 RUN set -x && \
+    # We don't need hirak/prestissimo since composer 2
+    # if [ $(echo "${VERSION_PHP_MINOR} <= 7" | bc) -eq 1 ]; then \
+    #     composer global require hirak/prestissimo ; \
+    # fi && \
     if [ -f "/var/www/html/composer.lock" ]; then \
-        case ${ENV_TYPE} in \
-            development|dev|staging|stage) \
-                composer global require hirak/prestissimo ; \
-                composer install --working-dir=/var/www/html ; \
-                ;; \
-            *) \
-                composer global require hirak/prestissimo ; \
-                composer install --no-dev --working-dir=/var/www/html ; \
-                ;; \
-        esac \
+        if [ "${APP_ENV}" == "development" ] || [ "${APP_ENV}" == "dev" || "${APP_ENV}" == "staging" ] || [ "${APP_ENV}" == "stage" ]; then \
+            composer install --working-dir=/var/www/html ; \
+        else \
+            composer install --no-dev --working-dir=/var/www/html ; \
+        fi \
     fi && \
     # resolve: The stream or file "/var/www/html/storage/logs/laravel.log" could not be opened in append mode: failed to open stream: Permission denied
     touch /var/www/html/storage/logs/laravel.log && \
     touch /var/log/cron.log && \
+    # please remove this APP_KEY generate for your production usage
+    #   - ref: https://tighten.co/blog/app-key-and-you/
+    php artisan key:generate && \     
     chown -R www-data:www-data /usr/share/nginx/html && \
     chown -R www-data:www-data /var/www/html && \
     find /var/www/html/storage -type f -exec chmod 664 {} \; && \

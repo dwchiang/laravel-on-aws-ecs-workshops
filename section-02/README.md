@@ -43,7 +43,7 @@ Let's create a new Laravel project in the folder `./secion-02/src/`:
 ❯ pwd
 /xxx/xxx/xxx/laravel-on-aws-ecs-workshops/section-02
 
-❯ composer create-project --prefer-dist laravel/laravel:6.18.35 src
+❯ composer create-project --prefer-dist laravel/laravel:8.6.1 src
 ```
 
 Here is the current project folder structure in `./section-02`:
